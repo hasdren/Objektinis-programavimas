@@ -10,7 +10,5 @@
   * **terminal**'e parašyti "**./ats**"
   
 **Programos veikimas:**
-  * Pasirinkti mokiniu skaiciu
-  * Pasirinkti norimus rodmenys
-  * Įrašyti studento vardą ir pavardę
-  * Jei balai negeneruojami atsitiktinai, tai juos įrašyti
+  * Pasirinkti norimus rodmenys(atsakant i konsoles klausimus(y/n) arba ivedant kas prašoma (mokiniu skaicius,mokiniu nd ivertis ir t.t).
+  * Balai isvedami i terminala.
