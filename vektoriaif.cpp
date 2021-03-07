@@ -1,0 +1,201 @@
+#include "vektoriai.h"
+
+void VP(int i, string &vardas, string &pavarde)
+{
+    cout << i + 1 << "-ojo studento vardas: ";
+    cin >> vardas;
+    vardas[0] = toupper(vardas[0]);
+    cout << i + 1 << "-ojo studento pavarde: ";
+    cin >> pavarde;
+    pavarde[0] = toupper(pavarde[0]);
+}
+void Random(int i, vector<int> &nd)
+{
+    nd.push_back(dist(mt));
+    cout << i + 1 << "-am studentui"
+         << "Pridetas :" << nd.back() << endl;
+}
+
+void IvestisSk(int c, vector<int> &nd)
+{
+    string laik;
+    cout << c + 1 << " studento " << nd.size() + 1 << " namu darbo ivertinimas [0-10]: ";
+    cin >> laik;
+    while (laik != "10" && (laik.length() != 1 || (laik.length() == 1 && (laik[0] - '0' < 0 || laik[0] - '0' > 10))))
+    {
+        cout << "Neteisinga ivestis!" << endl
+             << c + 1 << " studento " << nd.size() + 1 << " namu darbo ivertinimas [0-10]: ";
+        cin >> laik;
+    }
+    nd.push_back(laik[0] - '0');
+}
+
+double Average(vector<int> &nd, double &average)
+{
+    double sum = 0;
+    for (int i = 0; i < nd.size(); i++)
+    {
+        sum = sum + nd[i];
+    }
+    sum = sum / nd.size();
+    average=sum;
+}
+void Median(vector<int> &nd, double &median)
+{
+    double sum;
+    sort(nd.begin(), nd.end());
+    if (nd.size() % 2 != 0)
+    {
+        sum = nd[nd.size() / 2.0];
+    }
+    else
+    {
+        sum = (nd[nd.size() / 2.0] + nd[(nd.size() / 2.0) - 1]) / 2.0;
+    }
+    median = sum;
+}
+void printmed(string &vardas,string &pavarde,double &mediana){
+cout << left << setw(10) << vardas << setw(16) << pavarde << setw(12)<< fixed <<setprecision(2) << mediana << endl;
+}
+void printave(string &vardas,string &pavarde,double &average){
+    cout << left << setw(10) << vardas << setw(16) << pavarde << setw(12)<<fixed<<setprecision(2) << average << endl;
+}
+int studentEntry(){
+    int students;
+    cout << "iveskite studentu skaiciu?(>0)";
+    while (true)
+    {
+        cin >> students;
+        if (students <= 0)
+        {
+            cout << "Error , retry input";
+            cin.clear();
+        }
+        else
+        {
+            break;
+        }
+        return students;
+    }
+}
+int ManualEntry(){
+    int manual;
+    cout << "Ar norite, kad namu darbai butu ivedami?(y/n)";
+    while (true)
+    {
+        char p;
+        cin >> p;
+        if (p == 'Y' || p == 'y')
+        {
+            manual = 1;
+            cin.clear();
+            break;
+        }
+        else if (p == 'N' || p == 'n')
+        {
+            manual = 0;
+            cin.clear();
+            break;
+        }
+        else
+        {
+            cout << "Bloga ivestis";
+            cin.clear();
+        }
+    }
+    return manual;
+    
+}
+int HomeworkKnown(){
+    cout << "Ar zinote namu darbu kieki?(y/n)";
+    int knowhomework;
+    while (true)
+    {   char p;
+        cin >> p;
+        if (p == 'Y' || p == 'y')
+        {
+            knowhomework = 1;
+            cin.clear();
+            break;
+        }
+        else if (p == 'N' || p == 'n')
+        {
+            knowhomework = 0;
+            cin.clear();
+            break;
+        }
+        else
+        {
+            cout << "Bloga ivestis";
+            cin.clear();
+        }
+    }
+    return knowhomework;
+
+}
+int SA(){
+    int showaverage;
+    cout << "Ar norite matyti vidurki?(y/n)";
+    while (true)
+    {   char p;
+        cin >> p;
+        if (p == 'Y' || p == 'y')
+        {
+            showaverage = 1;
+            cin.clear();
+            break;
+        }
+        else if (p == 'N' || p == 'n')
+        {
+            showaverage = 0;
+            cin.clear();
+            break;
+        }
+        else
+        {
+            cout << "Wrong entry, try again";
+            cin.clear();
+        }
+    }
+    return showaverage;
+
+}
+int Choosefile()
+{
+    int sk;
+    cout << "pasirinkite faila";
+    while (!(cin >> sk) || (sk < 0 || sk > 3))
+    {
+        cout << "Neteisinga ivestis!" << endl;
+        cin.clear();
+        cin.ignore(128, '\n');
+    }
+    return sk;
+}
+int File(){
+    cout<<"Ar norite nuskaityti is failo?";
+    int readfile;
+    while (true)
+    {   char p;
+        cin >> p;
+        if (p == 'Y' || p == 'y')
+        {
+            readfile = 1;
+            cin.clear();
+            break;
+        }
+        else if (p == 'N' || p == 'n')
+        {
+            readfile = 0;
+            cin.clear();
+            break;
+        }
+        else
+        {
+            cout << "Wrong entry, try again";
+            cin.clear();
+        }
+    }
+    return readfile;
+
+}
