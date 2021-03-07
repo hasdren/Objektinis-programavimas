@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <random>
 #include <iomanip>
+#include <fstream>
 using namespace std;
 random_device rd;
 mt19937 mt(rd());
@@ -16,6 +17,7 @@ struct studentas
     string pavarde;
     double average;
     double mediana;
+    int egzaminas;
 };
 
 void VP(int i, string &vardas, string &pavarde)
@@ -64,11 +66,11 @@ void Median(vector<int> &nd, double &median)
     sort(nd.begin(), nd.end());
     if (nd.size() % 2 != 0)
     {
-        sum = nd[nd.size() / 2];
+        sum = nd[nd.size() / 2.0];
     }
     else
     {
-        sum = (nd[nd.size() / 2] + nd[(nd.size() / 2) - 1]) / 2.0;
+        sum = (nd[nd.size() / 2.0] + nd[(nd.size() / 2.0) - 1]) / 2.0;
     }
     median = sum;
 }
@@ -78,14 +80,9 @@ cout << left << setw(10) << vardas << setw(16) << pavarde << setw(12)<< fixed <<
 void printave(string &vardas,string &pavarde,double &average){
     cout << left << setw(10) << vardas << setw(16) << pavarde << setw(12)<<fixed<<setprecision(2) << average << endl;
 }
-
-int main()
-{
-    vector<studentas> s;
+int studentEntry(){
+    int students;
     cout << "iveskite studentu skaiciu?(>0)";
-    int students, showaverage, manual, knowhomework;
-    char p;
-
     while (true)
     {
         cin >> students;
@@ -98,11 +95,15 @@ int main()
         {
             break;
         }
+        return students;
     }
-    s.resize(students);
+}
+int ManualEntry(){
+    int manual;
     cout << "Ar norite, kad namu darbai butu ivedami?(y/n)";
     while (true)
     {
+        char p;
         cin >> p;
         if (p == 'Y' || p == 'y')
         {
@@ -122,9 +123,14 @@ int main()
             cin.clear();
         }
     }
+    return manual;
+    
+}
+int HomeworkKnown(){
     cout << "Ar zinote namu darbu kieki?(y/n)";
+    int knowhomework;
     while (true)
-    {
+    {   char p;
         cin >> p;
         if (p == 'Y' || p == 'y')
         {
@@ -144,9 +150,14 @@ int main()
             cin.clear();
         }
     }
+    return knowhomework;
+
+}
+int SA(){
+    int showaverage;
     cout << "Ar norite matyti vidurki?(y/n)";
     while (true)
-    {
+    {   char p;
         cin >> p;
         if (p == 'Y' || p == 'y')
         {
@@ -166,7 +177,162 @@ int main()
             cin.clear();
         }
     }
+    return showaverage;
 
+}
+int Choosefile()
+{
+    int sk;
+    cout << "pasirinkite faila";
+    while (!(cin >> sk) || (sk < 0 || sk > 3))
+    {
+        cout << "Neteisinga ivestis!" << endl;
+        cin.clear();
+        cin.ignore(128, '\n');
+    }
+    return sk;
+}
+int File(){
+    cout<<"Ar norite nuskaityti is failo?";
+    int readfile;
+    while (true)
+    {   char p;
+        cin >> p;
+        if (p == 'Y' || p == 'y')
+        {
+            readfile = 1;
+            cin.clear();
+            break;
+        }
+        else if (p == 'N' || p == 'n')
+        {
+            readfile = 0;
+            cin.clear();
+            break;
+        }
+        else
+        {
+            cout << "Wrong entry, try again";
+            cin.clear();
+        }
+    }
+    return readfile;
+
+}
+
+
+int main()
+{
+    vector<studentas> s;
+    int students, showaverage, manual, knowhomework,readfile,choise,findouthomework=-1,studentfile=1,grade;
+    string failas,test;
+    char p;
+    readfile=File();
+    if (readfile==1){
+    choise = Choosefile();
+    if (choise == 1)
+    {
+        failas="Studentai10000.txt";
+        
+    }
+    else if (choise == 2)
+    {
+        failas="Studentai100000.txt";
+        
+    }
+    else
+    {
+        failas="Studentai1000000.txt";
+        
+    }
+    ifstream in(failas);
+        in >> test;
+        in >> test;
+        while (test != "Egz.")
+        {
+            in >> test;
+            findouthomework++;
+        }
+    cout<<"Would you like the average to be shown?";
+    showaverage=SA();
+    if (showaverage==1){
+        while (!in.eof())
+    {
+        s.resize(studentfile);
+        in >> s[studentfile - 1].vardas;
+        in >> s[studentfile - 1].pavarde;
+        for (int m = 0; m < findouthomework; m++)
+        {
+            in >> grade;
+            s[studentfile - 1].nd.push_back(grade);
+        }
+        in >> s[studentfile - 1].egzaminas;
+        studentfile++;
+    }
+    for (int i=0;i<studentfile-1;i++){
+        Average(s[i].nd,s[i].average);
+    }
+
+    ofstream out("lmao.txt");
+    out<<fixed<<left<<setw(20)<<"Vardas";
+    out<<fixed<<left<<setw(20)<<"Pavarde";
+    out<<fixed<<left<<setw(20)<<"Galutinis(vid.)"<<endl;
+    out<< "-----------------------------------------------------------" << endl;
+
+    for (int b=0;b<studentfile-1;b++){
+        out<<fixed<<left<<setw(20)<<s[b].vardas;
+        out<<fixed<<left<<setw(20)<<s[b].pavarde;
+        out<<fixed<<setprecision(2)<<setw(10)<<s[b].average<<" "<<endl;
+
+
+    }
+        
+
+    }
+    else{
+         while (!in.eof())
+    {
+        s.resize(studentfile);
+        in >> s[studentfile - 1].vardas;
+        in >> s[studentfile - 1].pavarde;
+        for (int m = 0; m < findouthomework; m++)
+        {
+            in >> grade;
+            s[studentfile - 1].nd.push_back(grade);
+        }
+        in >> s[studentfile - 1].egzaminas;
+        studentfile++;
+    }
+    for(int i=0;i<studentfile-1;i++){
+        Median(s[i].nd,s[i].mediana);
+    }
+    ofstream out("lmao.txt");
+    out<<fixed<<left<<setw(20)<<"Vardas";
+    out<<fixed<<left<<setw(20)<<"Pavarde";
+    out<<fixed<<left<<setw(20)<<"Galutinis(med.)"<<endl;
+    out<< "-----------------------------------------------------------" << endl;
+
+    for (int b=0;b<studentfile-1;b++){
+        out<<fixed<<left<<setw(20)<<s[b].vardas;
+        out<<fixed<<left<<setw(20)<<s[b].pavarde;
+        out<<fixed<<setprecision(2)<<setw(10)<<s[b].mediana<<" "<<endl;
+
+
+    }
+
+
+
+    }
+    
+
+        
+    }
+    else{
+    students=studentEntry();
+    s.resize(students);
+    manual=ManualEntry();
+    knowhomework=HomeworkKnown();
+    showaverage=SA();
     for (int i = 0; i < students; i++)
     {
         VP(i, s[i].vardas, s[i].pavarde);
@@ -248,6 +414,7 @@ int main()
         printmed(s[i].vardas,s[i].pavarde,s[i].mediana);
     }
     }
-    
+    }
+   
 
 }
