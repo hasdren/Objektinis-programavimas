@@ -10,6 +10,6 @@
   * **terminal**'e parašyti "**./ats**"
   
 **Programos veikimas:**
-  * Pasirinkti norimus rodmenys(atsakant i konsoles klausimus(y/n) arba ivedant kas prašoma (mokiniu skaicius,mokiniu nd ivertis ir t.t).
+  * (Added)Galima pasirinkti , kad failai butu nuskaityti
   * Pasirinkti norimus rodmenys(atsakant i konsoles klausimus(y/n) arba ivedant kas prašoma (mokiniu skaicius,mokiniu nd ivertis ir t.t).
   * Balai isvedami i terminala.
