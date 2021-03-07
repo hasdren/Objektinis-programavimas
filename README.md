@@ -10,6 +10,7 @@
   * **terminal**'e parašyti "**./ats**"
   
 **Programos veikimas:**
+  * (Added)Exception handlingas.
   * (Added)failai atskirti:header failas , main failas ir funkciju failas.
   * Galima pasirinkti , kad failai butu nuskaityti.
   * Pasirinkti norimus rodmenys(atsakant i konsoles klausimus(y/n) arba ivedant kas prašoma (mokiniu skaicius,mokiniu nd ivertis ir t.t).
